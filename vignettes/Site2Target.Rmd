@@ -1,0 +1,356 @@
+---
+title: "'Site2Target': an R package to associate peaks and target genes"
+author:
+- name: Peyman Zarrineh
+  affiliation:
+  - The University of Manchester
+  email: peyman.zarrineh@manchester.ac.uk
+package: "`r BiocStyle::pkg_ver('Site2Target')`"
+date: "`r format(Sys.Date(), '%B %d, %Y')`"
+output: 
+  BiocStyle::html_document
+vignette: >
+    %\VignetteIndexEntry{Site2Target} 
+    %\VignettePackage{Site2Target}
+    %\VignetteEngine{knitr::rmarkdown} 
+    %\VignetteEncoding{UTF-8}
+bibliography: "`r file.path(system.file('vignettes', package = 'Site2Target'), 'Site2Target.bib')`"
+abstract: >
+ <p> 'Site2Target' is an R package to associate sets of sites/peaks to target genes. It provides peakwise-associations to associate target genes for a given set of peaks. It also provides genewise-associations which start from genes (ex. differentially expressed genes) and associate peaks/sites to these genes.
+---
+
+<style type="text/css">
+.smaller {
+  font-size: 10px
+}
+</style>
+
+```{r echo = FALSE, message = FALSE, warning = FALSE}
+library(BiocStyle)
+```
+
+
+# Introduction
+
+Associating peaks/sites from high-throughput experiments and target genes is a fundamental question in gene regulatory studies. Peaks can be transcription factor binding sites from ChIP-seq experiments, or can be open chromatin regions derived from ATAC-seq experiments as well as histone modification marks derived from ChIP-seq experiments. Gene regulatory perturbation often measured by standard high-throughput expression measurement such as RNA-seq.
+The effect of sites/peaks on genes expression have been implemented in peakwise-association of **Site2Target**. The peaks are associated to genes by given distance (default 50K base pairs). **Site2Target** can also associate sites/peaks to genes with extra user provided DNA-DNA interactions. This can be known as enhancer-promoter interactions or high-throughput interactions from HiC or similar experiments. Alternatively,  **Site2Target** can associate peaks to genes inside user given genomic ranges. These genomic ranges can be TADs, subTADs, loops, or any similar associations to genomic regions. **Site2Target** work with both peaks/sites with and without intensity values. For example, peaks may only consist of differential accessibility of open chromatin or binding sites of transcription factors. On the other hand, peaks/sites can also have intensity values such transcription factor binding sites intensities. In cases of binary associations, the number of associated peaks to genes follow negative binomial distribution similar to any other count data. Therefore, **Site2Target** provided negative binomial tests (default) as well as Poisson test to detect target genes of given peaks. Generally, peaks such as transcription factor binding sites, and to some extent histone marks and open chromatin accessibility follow log-normal distribution. Therefore, **Site2Target** models the intensity values assigned to each gene with log-normal distribution. A similar approach has been used to model upstream regulator and target gene interaction [@Kramer2014]. **Site2Target** used `r Biocpkg("GenomicRanges")` [@Lawrence2013] to perform all the functions related to genome interactions/associations, and used `r CRANpkg("MASS")` [@Venables2002] to perform statistical modeling.
+**Site2Target** also performs genewise-associations. For this aim it associates a set of user provided genes such as differential expressed genes to a set of user provided peaks/sites regions such as (differential or total) open chromatin regions, TF binding regions, etc. The associations can be done by genomic distance (ex. 50k or 100k base pairs), user provided interactions (ex. HiC interactions), or user provided regions (ex. TADs, subTADs, loops, etc). Three tables are the output of genewise-association: genes, peaks, and interaction tables. Functions are developed in **Site2Target** User to add further columns to these tables such as fold changes, intensity values of genes or peaks as well as interactome values such as HiC intensity values in interaction table.
+
+
+
+# Major functions of Site2Target
+
+
+First install and load the libraries needed to run the examples of this document:
+
+```{r load-libs, message = FALSE,  warning = FALSE}
+library(Site2Target)
+```
+
+The functions, implemented in **Site2Target**, perform two major tasks: **1.** peakwise-association: To predict target genes of given peaks/sites.
+**2.** genewise-association: To associate given genes (ex. differential genes) to given peaks/sites (ex. differential open chromatins).
+
+
+# Peakwise-association
+
+**Site2Target** predicts the target genes of given peaks/sites. `getTargetGenesPvals` and `getTargetGenesPvalsWithDNAInteractions` functions predict the target genes for peaks without using peaks intensities. `getTargetGenesPvalsWithIntensities` and `getTargetGenesPvalsWithIntensitiesAndDNAInteractions` functions predict the target genes for peaks using peak intensity values.
+
+As an example, we use binding sites of a transcription factor MEIS as peak sets in human cardiomyocyte progenerators, and associate them to genes located up to 500000 base pairs. Only chr21 is used to make the data smaller. `getTargetGenesPvals` function associates peaks to genes in this example. The number of associated peaks to each gene follow negative binomial distribution, so by default the negative binomial test is performed. Alternatively, users can choose a Poisson test to be performed. In this example, five top predicted targets based on the test results, and the expression log fold change WT vs MEIS KO are presented as a data frame.
+
+```{r, warning=FALSE, message=FALSE}
+
+# Read gene coordinates 
+geneFile=system.file("extdata", "gene_expression.tsv",
+                     package="Site2Target")
+geneCoords <- Table2Granges(geneFile)
+
+# Read gene table
+geneTable <- read.table(geneFile, header=TRUE)
+
+# Read peak coordinates
+tfFile =system.file("extdata", "MEIS_binding.tsv",
+                    package="Site2Target")
+TFCoords <- Table2Granges(tfFile)
+
+# Predict targets
+pvals <- getTargetGenesPvals( geneCoordinates=geneCoords,
+                              sites=TFCoords, distance = 50000)
+
+topTargetNum <- 5
+topTargetIndex <- order(pvals)[1:topTargetNum]
+
+# Make a data frame of peak targets pvalues and expression logFCs
+
+dfTopTarget <- 
+  data.frame(name=geneTable$name[topTargetIndex],
+             pvalue=pvals[topTargetIndex],
+             exprLogC=geneTable$logFC[topTargetIndex]
+             )
+dfTopTarget
+
+```
+
+
+`getTargetGenesPvals` can also associate peaks and genes in user-provided genomic ranges. In the next example, we will associate peaks and genes by topologically associating domains (TADs) up to 1M bp distance.
+
+
+
+```{r, warning=FALSE, message=FALSE}
+
+# Read TAD regions
+TADsFile =system.file("extdata", "TADs.tsv",
+                               package="Site2Target")
+TADs <- Table2Granges(TADsFile)
+
+# Predict targets
+pvals <-  
+  getTargetGenesPvals(geneCoordinates=geneCoords,
+                      sites=TFCoords, givenRegions=TADs, distance = 1000000)
+
+topTargetNum <- 5
+topTargetIndex <- order(pvals)[1:topTargetNum]
+
+# Make a data frame of peak targets pvalues and expression logFCs
+
+dfTopTarget <- 
+  data.frame(name=geneTable$name[topTargetIndex],
+             pvalue=pvals[topTargetIndex],
+             exprLogC=geneTable$logFC[topTargetIndex]
+             )
+dfTopTarget
+
+```
+
+`getTargetGenesPvalsWithDNAInteractions` associates peaks and genes using both distance (default 50k bp) and user provided DNA-DNA interactions. In the next example, we will associate peaks and genes by both distance (up to 50K bp), and HiC interactions.
+
+
+
+```{r, warning=FALSE, message=FALSE}
+
+# Read HiC interactions
+HiCFile =system.file("extdata", "HiC_intensities.tsv",
+                               package="Site2Target")
+HiCstr1 <- Table2Granges(HiCFile, chrColName="Strand1_chr",
+                      startColName="Strand1_start", endColName="Strand1_end")
+HiCstr2 <- Table2Granges(HiCFile, chrColName="Strand2_chr",
+                     startColName="Strand2_start", endColName="Strand2_end")
+
+# Predict targets
+pvals <- 
+  getTargetGenesPvalsWithDNAInteractions(
+    geneCoordinates=geneCoords,
+    sites=TFCoords,
+    strand1=HiCstr1,
+    strand2=HiCstr2)
+
+topTargetNum <- 5
+topTargetIndex <- order(pvals)[1:topTargetNum]
+
+# Make a data frame of peak targets pvalues and expression logFCs
+
+dfTopTarget <- 
+  data.frame(name=geneTable$name[topTargetIndex],
+             pvalue=pvals[topTargetIndex],
+             exprLogC=geneTable$logFC[topTargetIndex]
+             )
+dfTopTarget
+
+```
+
+Similar functions have been implemented in **Site2Target** to predict the target genes for peaks with intensity values. intensity values of ChIP-seq, ATAC-seq, and similar experiments generally follows log-normal distribution. Therefore, normal test of log-scaled intensity values associated to genes have been implemented for peaks with intensity values. 
+
+`getTargetGenesPvalsWithIntensities` is similar to `getTargetGenesPvals`, but it also take the intensity values of peaks. It associates peaks by distance or by distance and user provided regions such as TADs. In the following example, MEIS target genes are predicted by associating peaks to genes by default distance 50K bp. 
+
+
+```{r, warning=FALSE, message=FALSE}
+
+# Read MEIS binding intensities
+tfTable <- read.table(tfFile, header=TRUE)
+tfIntensities <- tfTable$intensities
+
+# Predict targets
+pvals <- 
+  getTargetGenesPvalsWithIntensities(
+    geneCoordinates=geneCoords,
+    sites=TFCoords,
+    intensities=tfIntensities
+    )
+
+
+topTargetNum <- 5
+topTargetIndex <- order(pvals)[1:topTargetNum]
+
+# Make a data frame of peak targets pvalues and expression logFCs
+
+dfTopTarget <- 
+  data.frame(name=geneTable$name[topTargetIndex],
+             pvalue=pvals[topTargetIndex],
+             exprLogC=geneTable$logFC[topTargetIndex]
+             )
+dfTopTarget
+
+```
+
+`getTargetGenesPvalsWithIntensitiesAndDNAInteractions` is similar to `getTargetGenesPvalsWithDNAInteractions`, but it also takes the intensity values of peaks. It associates peaks by distance or by distance and user provided DNA-DNA interactions such as HiC. In the following example, MEIS target genes are predicted by associating peaks to genes (default 50K bp) and HiC interactions. 
+
+
+```{r, warning=FALSE, message=FALSE}
+
+# Predict targets
+pvals <- 
+  getTargetGenesPvalsWithIntensitiesAndDNAInteractions(
+    geneCoordinates=geneCoords,
+    sites=TFCoords,
+    intensities=tfIntensities,
+    strand1=HiCstr1,
+    strand2=HiCstr2
+    )
+
+
+topTargetNum <- 5
+topTargetIndex <- order(pvals)[1:topTargetNum]
+
+# Make a data frame of peak targets pvalues and expression logFCs
+
+dfTopTarget <- 
+  data.frame(name=geneTable$name[topTargetIndex],
+             pvalue=pvals[topTargetIndex],
+             exprLogC=geneTable$logFC[topTargetIndex]
+             )
+dfTopTarget
+
+```
+
+
+
+
+# Genewise-association
+
+**Site2Target** also provides functions to start with genes such as differential genes and associate peaks/sites to these genes. `genewiseAssociation` is the main function to associate peaks to the user provided genes. Extra information regarding genes (ex. expression logFC) or peaks (ex. peak intensities) can be added using `addColumn2geneWiseAssociation` function. Extra information regarding interactions (ex. HiC interaction intensities) can be added using `addRelation2geneWiseAssociation` function.
+
+`genewiseAssociation` function detects associate peaks to genes and saves the results in three tables: **1.** `gene.tsv` consists of gene information. **2.** `peak.tsv` consists of peak information. **3.** `link.tsv` consists of linking gene-peak information  such as gene and peak names as well as their distances. These files can be found in a folder with the user-provided name. In the following example, we start with differential genes WT vs MEIS KO, and associate them to MEIS binding sites by using distance (50k bp), TADs (up to 1M bp distance), and HiC interactions. The function provides two values: the ratio of genes which are associated to peaks called `geneCoverage` as well as the ratio of peaks which are associated to genes called `peakCoverage`.
+
+```{r, message=FALSE, warning=FALSE}
+
+# Take genes with Log fold change larger than one
+geneDEIndices <- which((abs(geneTable$logFC)>1)==TRUE)
+indicesLen <- length(geneDEIndices)
+if(indicesLen >0)
+{
+    geneTable <- geneTable[geneDEIndices,]
+    geneCoords <- geneCoords[geneDEIndices]
+}
+geneDENames <- geneTable$name
+geneDElogFC <- geneTable$logFC
+geneCoordsDE <- geneCoords
+
+# Associate differential genes to TF binding by 50K distance
+statsDist <- 
+  genewiseAssociation(associationBy="distance",
+                      geneCoordinates=geneCoordsDE,
+                      geneNames=geneDENames,
+                      peakCoordinates=TFCoords,
+                      distance=50000,
+                      outFile="Gene_TF_50K"
+                      )
+statsDist
+
+
+# Associate differential genes to TF binding by TADs (up to 1M bp)
+statsTADs <- 
+  genewiseAssociation(associationBy="regions",
+                      geneCoordinates=geneCoordsDE,
+                      geneNames=geneDENames,
+                      peakCoordinates=TFCoords,
+                      givenRegions=TADs,
+                      distance=1000000,
+                      outFile="Gene_TF_TADs"
+                      )
+statsTADs
+
+
+# Associate differential genes to TF binding by HiC
+statsHiC <- 
+  genewiseAssociation(associationBy="DNAinteractions",
+                      geneCoordinates=geneCoordsDE,
+                      geneNames=geneDENames,
+                      peakCoordinates=TFCoords,
+                      distance=50000,
+                      strand1=HiCstr1,
+                      strand2=HiCstr2,
+                      outFile="Gene_TF_HiC"
+                      )
+statsHiC
+
+
+```
+
+
+`addColumn2geneWiseAssociation` function adds information regarding genes and peaks to the tables. In the first example, this function adds log fold changes values of gene expression WT vs MEIS KO to `gene.tsv` and `link.tsv` tables. In the second example, this function adds MEIS binding intensities to `peak.tsv` and `link.tsv` tables. 
+
+
+```{r, message=FALSE, warning=FALSE}
+
+
+# Add log fold changes of gene expressoin         
+addColumn2geneWiseAssociation(type="gene", name=geneDENames,
+                              columnName="Expr_logFC",
+                              column=geneDElogFC,
+                              inFile="Gene_TF_50K",
+                              outFile="Gene_TF_50K"
+                              )
+         
+
+# Add binding intensities of MEIS
+           
+addColumn2geneWiseAssociation(type="peak",
+                              coordinates=TFCoords,
+                              columnName="Binding_Intensities",
+                              column=tfIntensities,
+                              inFile="Gene_TF_50K",
+                              outFile="Gene_TF_50K"
+                              )
+
+
+```
+
+
+
+`addRelation2geneWiseAssociation` function  adds a column of information only to `link.tsv` table. In the following example, HiC values between genes and peak regions are added to the `link.tsv`table.
+
+```{r, message=FALSE, warning=FALSE}
+
+HiCTable <- read.table(HiCFile, header=TRUE)
+HiCintensities <- HiCTable$intensities
+
+addRelation2geneWiseAssociation(strand1=HiCstr1,
+                                strand2=HiCstr2,
+                                columnName="HiC_Intensities",
+                                column=HiCintensities,
+                                inFile="Gene_TF_50K",
+                                outFile="Gene_TF_50K"
+                                )
+
+
+
+
+```
+
+
+
+```{r echo=FALSE, results='hide',message=FALSE}
+
+# Remove folders
+unlink("Gene_TF_50K", recursive = TRUE)
+unlink("Gene_TF_TADs", recursive = TRUE)
+unlink("Gene_TF_HiC", recursive = TRUE)
+```
+
+# Session Info
+```{r sessionInfo}
+sessionInfo()
+```
+
+
+# References
+
