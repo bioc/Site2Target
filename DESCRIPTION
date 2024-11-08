@@ -7,7 +7,7 @@ Description: Statistics implemented for both peak-wise and gene-wise association
 License: GPL-2
 Encoding: UTF-8
 LazyData: false
-Imports: S4Vectors, stats, utils, BiocGenerics, GenomeInfoDb, MASS, IRanges, GenomicRanges
+Imports: S4Vectors, stats, utils, BiocGenerics, GenomeInfoDb, MASS, IRanges, GenomicRanges, biocViews
 RoxygenNote: 7.3.2
 Suggests: BiocStyle, knitr, rmarkdown
 VignetteBuilder: knitr
