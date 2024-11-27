@@ -15,3 +15,6 @@ Genomic coordinates in granges format
 \description{
 Get genomic coordinates as trings and convert them to grangess
 }
+\examples{
+string2Granges(c("chr1:1112-1231", "ch2:3131-3221"))
+}

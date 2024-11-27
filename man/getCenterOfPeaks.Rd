@@ -15,3 +15,9 @@ granges format of the center
 \description{
 Get a granges and find the center of it
 }
+\examples{
+tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+TFCoords <- Table2Granges(tfFile)
+TFCoordsCenters <- getCenterOfPeaks(TFCoords)
+TFCoordsCenters
+}

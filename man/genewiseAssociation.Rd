@@ -57,7 +57,6 @@ three tables: Gene table, peak table, and Gene-Peak association
 table.
 }
 \examples{
-\dontrun{
 geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 geneCoords <- Table2Granges(geneFile)
 geneTable <- read.table(geneFile, header=TRUE)
@@ -85,5 +84,4 @@ genewiseAssociation(associationBy="distance",
                     distance=50000,
                     outFile="Gene_TF_50K")
 stats
-}
 }

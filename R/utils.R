@@ -62,6 +62,11 @@ Table2Granges  <-
 #' @description Get a granges and find the center of it
 #' @param gr granges coordinate
 #' @return granges format of the center
+#' @examples
+#' tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+#' TFCoords <- Table2Granges(tfFile)
+#' TFCoordsCenters <- getCenterOfPeaks(TFCoords)
+#' TFCoordsCenters
 
 getCenterOfPeaks <- function(gr)
 {
@@ -127,6 +132,11 @@ site2GeneDistance <- function(geneCoordinates, peakCoordinates)
 #' @description Get genomic coordinates granges and convert them to strings
 #' @param gr granges coordinates
 #' @return string of coordinates
+#' @examples
+#' tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+#' TFCoords <- Table2Granges(tfFile)
+#' strCoords <- granges2String(TFCoords)
+#' head(strCoords)
 
 granges2String <- function(gr)
 {
@@ -143,6 +153,8 @@ granges2String <- function(gr)
 #' @description Get genomic coordinates as trings and convert them to grangess
 #' @param strCoordinates string of coordinates
 #' @return Genomic coordinates in granges format
+#' @examples
+#' string2Granges(c("chr1:1112-1231", "ch2:3131-3221"))
 
 string2Granges <- function(strCoordinates) {
   len <- length(strCoordinates)

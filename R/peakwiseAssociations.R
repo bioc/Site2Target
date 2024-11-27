@@ -9,6 +9,14 @@
 #' @param sites granges coordinates of sites
 #' @param distance the maximum distance to associate sites to genes. default 50K
 #' @return A vector sites number matched to each gene
+#' @examples
+#' geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
+#' geneCoords <- Table2Granges(geneFile)
+#'
+#' tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+#' TFCoords <- Table2Granges(tfFile)
+#'
+#' targetNum <- getTargetGenesNumber( geneCoords, TFCoords)
 
 getTargetGenesNumber <- function(geneCoordinates=NA, sites=NA, distance=50000)
 {
@@ -60,6 +68,15 @@ getTargetGenesNumber <- function(geneCoordinates=NA, sites=NA, distance=50000)
 #' @param sites granges coordinates of sites
 #' @param distance the maximum distance to associate sites to regions
 #' @return A granges of the extended sites in given regions
+
+#' @examples
+#' tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+#' TFCoords <- Table2Granges(tfFile)
+#'
+#' TADsFile =system.file("extdata", "TADs.tsv",package="Site2Target")
+#' TADs <- Table2Granges(TADsFile)
+#'
+#' extendSitesInGivenRegions(TADs, TFCoords)
 
 
 extendSitesInGivenRegions <- function(givenRegions, sites, distance=100000)

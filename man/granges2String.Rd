@@ -15,3 +15,9 @@ string of coordinates
 \description{
 Get genomic coordinates granges and convert them to strings
 }
+\examples{
+tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+TFCoords <- Table2Granges(tfFile)
+strCoords <- granges2String(TFCoords)
+head(strCoords)
+}

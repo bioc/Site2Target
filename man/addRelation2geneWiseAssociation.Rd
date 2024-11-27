@@ -34,7 +34,6 @@ column of interaction values (ex. HiC intensities ) and add them
 as a column to gene-peak interaction table.
 }
 \examples{
-\dontrun{
 geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 geneCoords <- Table2Granges(geneFile)
 geneTable <- read.table(geneFile, header=TRUE)
@@ -74,7 +73,6 @@ HiCintensities <- HiCTable$intensities
 addRelation2geneWiseAssociation(strand1=HiCstr1, strand2=HiCstr2,
      columnName="HiC_Intensities", column=HiCintensities,
      inFile="Gene_TF_50K", outFile="Gene_TF_50K")
-}
 }
 \seealso{
 \code{\link{genewiseAssociation}}

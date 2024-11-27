@@ -21,3 +21,12 @@ Get sites and given regions (ex. TADs or loops) coordinates.
 
 It extends sites in a give region using a distance function
 }
+\examples{
+tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
+TFCoords <- Table2Granges(tfFile)
+
+TADsFile =system.file("extdata", "TADs.tsv",package="Site2Target")
+TADs <- Table2Granges(TADsFile)
+
+extendSitesInGivenRegions(TADs, TFCoords)
+}

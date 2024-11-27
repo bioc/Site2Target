@@ -10,7 +10,6 @@ differential genes WT vs KO of a transcription factor and binding sites
  of this transcription factor.
 }
 \examples{
-\dontrun{
 geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 geneCoords <- Table2Granges(geneFile)
 geneTable <- read.table(geneFile, header=TRUE)
@@ -55,5 +54,5 @@ genewiseAssociation(associationBy="distance",
                     outFile="Gene_TF_50K")
 stats
 }
-}
+
 

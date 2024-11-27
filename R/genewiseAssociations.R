@@ -35,6 +35,8 @@ getNameFromCoordinates <- function(names, coordinates, queryCoordinates)
 #' @description Remove reserved characters (such as *, +, -, etc) from a string
 #' @param name A string of characters
 #' @return A string without reserved characters
+#' @examples
+#' removeReserveCharacter("A&%B^f6")
 
 removeReserveCharacter <- function(name)
 {
@@ -90,7 +92,6 @@ removeReserveCharacter <- function(name)
 #' @param outFile The name of the output folder (default "genewiseAssociation")
 #' @return A vector of portions of linked genes and linked peaks
 #' @examples
-#'\dontrun{
 #' geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 #' geneCoords <- Table2Granges(geneFile)
 #' geneTable <- read.table(geneFile, header=TRUE)
@@ -118,7 +119,6 @@ removeReserveCharacter <- function(name)
 #'                     distance=50000,
 #'                     outFile="Gene_TF_50K")
 #' stats
-#'}
 #' @export
 
 
@@ -446,7 +446,6 @@ genewiseAssociation <-
 #' @param inFile The name of the input folder (default "genewiseAssociation")
 #' @param outFile The name of the output folder (default "genewiseAssociation")
 #' @examples
-#'\dontrun{
 #' geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 #' geneCoords <- Table2Granges(geneFile)
 #' geneTable <- read.table(geneFile, header=TRUE)
@@ -485,7 +484,6 @@ genewiseAssociation <-
 #' addColumn2geneWiseAssociation(type="peak", coordinates=TFCoords,
 #'    columnName="Binding_Intensities", column=tfIntensities,
 #'    inFile="Gene_TF_50K", outFile="Gene_TF_50K")
-#'}
 #' @seealso
 #' \code{\link{genewiseAssociation}}
 #' @export
@@ -703,7 +701,6 @@ addColumn2geneWiseAssociation <-
 #' @param inFile The name of the input folder (default "genewiseAssociation")
 #' @param outFile The name of the output folder (default "genewiseAssociation")
 #' @examples
-#'\dontrun{
 #' geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 #' geneCoords <- Table2Granges(geneFile)
 #' geneTable <- read.table(geneFile, header=TRUE)
@@ -743,7 +740,6 @@ addColumn2geneWiseAssociation <-
 #' addRelation2geneWiseAssociation(strand1=HiCstr1, strand2=HiCstr2,
 #'      columnName="HiC_Intensities", column=HiCintensities,
 #'      inFile="Gene_TF_50K", outFile="Gene_TF_50K")
-#'}
 #' @seealso
 #' \code{\link{genewiseAssociation}}
 #' @export

@@ -39,7 +39,6 @@ a column of relevant values. This function add these values as
 a column to gene or peak table as well as the interaction table.
 }
 \examples{
-\dontrun{
 geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 geneCoords <- Table2Granges(geneFile)
 geneTable <- read.table(geneFile, header=TRUE)
@@ -78,7 +77,6 @@ addColumn2geneWiseAssociation(type="gene", name=geneDENames,
 addColumn2geneWiseAssociation(type="peak", coordinates=TFCoords,
    columnName="Binding_Intensities", column=tfIntensities,
    inFile="Gene_TF_50K", outFile="Gene_TF_50K")
-}
 }
 \seealso{
 \code{\link{genewiseAssociation}}
