@@ -2,12 +2,12 @@
 
 #' @title Get names of genes or peaks related to a query coordinates
 #' @description Get names and coordinates of genes or peaks. It also get the
-#' @description coordinates of query regions and returns the realted genes or
+#' @description coordinates of query regions and returns the related genes or
 #' @description peak names.
 #' @param names Names of genes or peaks
 #' @param coordinates Coordinates of genes or peaks in granges format
 #' @param queryCoordinates Coordinates of the query regions in granges format
-#' @return Names of genes or peaks in queried reiongs
+#' @return Names of genes or peaks in queried regions
 
 getNameFromCoordinates <- function(names, coordinates, queryCoordinates)
 {
@@ -445,6 +445,7 @@ genewiseAssociation <-
 #' @param column Column values that should be added to the tables
 #' @param inFile The name of the input folder (default "genewiseAssociation")
 #' @param outFile The name of the output folder (default "genewiseAssociation")
+#' @return No value returns just column would be added to the tables
 #' @examples
 #' geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 #' geneCoords <- Table2Granges(geneFile)
@@ -700,6 +701,7 @@ addColumn2geneWiseAssociation <-
 #' @param column Column values that should be added to the interaction table
 #' @param inFile The name of the input folder (default "genewiseAssociation")
 #' @param outFile The name of the output folder (default "genewiseAssociation")
+#' @return No value would be returned just a column be added to link table
 #' @examples
 #' geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 #' geneCoords <- Table2Granges(geneFile)

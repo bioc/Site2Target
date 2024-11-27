@@ -14,12 +14,12 @@ getNameFromCoordinates(names, coordinates, queryCoordinates)
 \item{queryCoordinates}{Coordinates of the query regions in granges format}
 }
 \value{
-Names of genes or peaks in queried reiongs
+Names of genes or peaks in queried regions
 }
 \description{
 Get names and coordinates of genes or peaks. It also get the
 
-coordinates of query regions and returns the realted genes or
+coordinates of query regions and returns the related genes or
 
 peak names.
 }

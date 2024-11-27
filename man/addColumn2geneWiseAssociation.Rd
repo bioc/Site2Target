@@ -29,6 +29,9 @@ addColumn2geneWiseAssociation(
 
 \item{outFile}{The name of the output folder (default "genewiseAssociation")}
 }
+\value{
+No value returns just column would be added to the tables
+}
 \description{
 Add a column of values based on the type either genes or peaks.
 

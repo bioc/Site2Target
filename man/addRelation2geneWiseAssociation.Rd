@@ -26,6 +26,9 @@ addRelation2geneWiseAssociation(
 
 \item{outFile}{The name of the output folder (default "genewiseAssociation")}
 }
+\value{
+No value would be returned just a column be added to link table
+}
 \description{
 Get coordinates of interactions (ex. HiC interactions) and a
 
