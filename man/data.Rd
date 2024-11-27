@@ -24,6 +24,9 @@ experimental datasets representing relevant gene and peak information.
 HiC interactions and topologically associating domains (TADs) are derived
 from a HiC experiments are auxiliary datasets related to DNA-DNA interactions.
 }
+\value{
+Just description of data
+}
 \examples{
 
 ## Gene expression table

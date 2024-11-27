@@ -9,6 +9,9 @@ Here is an example of a peak-wise and a gene-wise association of
 differential genes WT vs KO of a transcription factor and binding sites
  of this transcription factor.
 }
+\value{
+Just an example
+}
 \examples{
 geneFile=system.file("extdata", "gene_expression.tsv", package="Site2Target")
 geneCoords <- Table2Granges(geneFile)
