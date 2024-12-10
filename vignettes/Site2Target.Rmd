@@ -14,7 +14,7 @@ vignette: >
     %\VignettePackage{Site2Target}
     %\VignetteEngine{knitr::rmarkdown} 
     %\VignetteEncoding{UTF-8}
-bibliography: "`r file.path(system.file('vignettes', package = 'Site2Target'), 'Site2Target.bib')`"
+bibliography: Site2Target.bib
 abstract: >
  <p> 'Site2Target' is an R package to associate sets of sites/peaks to target genes. It provides peakwise-associations to associate target genes for a given set of peaks. It also provides genewise-associations which start from genes (ex. differentially expressed genes) and associate peaks/sites to these genes.
 ---
