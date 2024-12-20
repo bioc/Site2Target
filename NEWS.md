@@ -1,3 +1,11 @@
+
+# Site2Target 0.99.2
+
++ gitignore problem fixed to not include wrong files
++ inst/scripts added to explain data
++ NAMESPACE import problem fixed by using ROXYGEN2
+
+
 # Site2Target 0.99.1
 
 + Vignettes problem with Rmd file fixed

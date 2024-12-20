@@ -1,2 +1,9 @@
 inst/doc
+inst/scripts
 .Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+debug.log
+vignettes/.Rhistory
+Site2Target.Rproj
