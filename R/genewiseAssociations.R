@@ -37,6 +37,8 @@ getNameFromCoordinates <- function(names, coordinates, queryCoordinates)
 #' @return A string without reserved characters
 #' @examples
 #' removeReserveCharacter("A&%B^f6")
+#'
+#' @export
 
 removeReserveCharacter <- function(name)
 {

@@ -29,4 +29,5 @@ TADsFile =system.file("extdata", "TADs.tsv",package="Site2Target")
 TADs <- Table2Granges(TADsFile)
 
 extendSitesInGivenRegions(TADs, TFCoords)
+
 }

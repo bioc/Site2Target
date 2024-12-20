@@ -67,6 +67,8 @@ Table2Granges  <-
 #' TFCoords <- Table2Granges(tfFile)
 #' TFCoordsCenters <- getCenterOfPeaks(TFCoords)
 #' TFCoordsCenters
+#'
+#' @export
 
 getCenterOfPeaks <- function(gr)
 {
@@ -137,6 +139,8 @@ site2GeneDistance <- function(geneCoordinates, peakCoordinates)
 #' TFCoords <- Table2Granges(tfFile)
 #' strCoords <- granges2String(TFCoords)
 #' head(strCoords)
+#'
+#' @export
 
 granges2String <- function(gr)
 {
@@ -155,6 +159,8 @@ granges2String <- function(gr)
 #' @return Genomic coordinates in granges format
 #' @examples
 #' string2Granges(c("chr1:1112-1231", "ch2:3131-3221"))
+#'
+#' @export
 
 string2Granges <- function(strCoordinates) {
   len <- length(strCoordinates)

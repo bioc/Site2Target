@@ -29,4 +29,5 @@ tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
 TFCoords <- Table2Granges(tfFile)
 
 targetNum <- getTargetGenesNumber( geneCoords, TFCoords)
+
 }

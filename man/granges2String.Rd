@@ -20,4 +20,5 @@ tfFile =system.file("extdata", "MEIS_binding.tsv", package="Site2Target")
 TFCoords <- Table2Granges(tfFile)
 strCoords <- granges2String(TFCoords)
 head(strCoords)
+
 }

@@ -17,4 +17,5 @@ Remove reserved characters (such as *, +, -, etc) from a string
 }
 \examples{
 removeReserveCharacter("A&\%B^f6")
+
 }
