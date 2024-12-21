@@ -1,0 +1,14 @@
+Human in-vitro "Cardiomyocyte Progenitor Cells" at day 5 was used to exhibit regulatory functions that one can use with Site2Target.
+
+All the used datasets are available as follow from:
+ * ChIP-seq for MEIS1						E-MTAB-14243
+ * RNA-seq wild-type vs MEIS KO cardiac differentiation		E-MTAB-14250
+ * HiC interactions						GSM3262960
+
+As the data for Bioconductor packages must be small. Only Chr21 of all the datasets have been used in Site2Target
+
+RNA_seq and ChIP_seq publication:
+Zoulfia Darieva et al. The evolutionary ancient MEIS transcription factors actuate lineage-specific transcription to establish cardiac fate. https://www.biorxiv.org/content/10.1101/2024.07.18.604075v1
+
+HiC publication:
+Zhang et al. Transcriptionally active HERV-H retrotransposons demarcate topologically associating domains in human pluripotent stem cells. Nat Genet 2019 Sep;51(9):1380-1388. PMID: 31427791
