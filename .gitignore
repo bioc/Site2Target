@@ -6,3 +6,6 @@ inst/doc
 debug.log
 vignettes/.Rhistory
 Site2Target.Rproj
+
+/doc/
+/Meta/

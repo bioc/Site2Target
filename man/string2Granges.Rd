@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{string2Granges}
 \alias{string2Granges}
-\title{Conver strings to granges of cooridnates}
+\title{Convert strings to granges of coordinates}
 \usage{
 string2Granges(strCoordinates)
 }
@@ -13,7 +13,7 @@ string2Granges(strCoordinates)
 Genomic coordinates in granges format
 }
 \description{
-Get genomic coordinates as trings and convert them to grangess
+Get genomic coordinates as strings and convert them to granges
 }
 \examples{
 string2Granges(c("chr1:1112-1231", "ch2:3131-3221"))

@@ -219,7 +219,7 @@ getTargetGenesPvals <-
   if(upperbound<4)
   {
     warning("Insufficeint interactions to model")
-    acceptedInds <- c(1:geneNumber)
+    acceptedInds <- seq_len(geneNumber)
   }
   else
   {
@@ -430,7 +430,7 @@ getTargetGenesPvalsWithDNAInteractions <-
   if(upperbound<4)
   {
     warning("Insufficeint interactions to model")
-    acceptedInds <- c(1:geneNumber)
+    acceptedInds <- seq_len(geneNumber)
   }
   else
   {

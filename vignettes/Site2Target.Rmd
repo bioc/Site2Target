@@ -29,8 +29,29 @@ abstract: >
 library(BiocStyle)
 ```
 
+# Installation
+To install this package, start R (version "4.4" or above) and either use BiocManager:
+
+```
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+
+BiocManager::install("Site2Target")
+
+```
+or directly install from github:
+
+``` 
+devtools::install_github("fls-bioinformatics-core/Site2Target")
+``` 
 
 # Introduction
+
+## Motivation for Submitting to Bioconductor
+
+The goal of the **Site2Target** package is to provide bioinformaticians and computational biologists with computational tools to study the regulatory networks by integrating high-throughput omics datasets. **Site2Target** facilitates associating peaks from different high-throughput experiments to target genes. We have submitted **Site2Target** to **Bioconductor** because of its strong alignment with the mission of the Bioconductor project. Bioconductor provides a rich ecosystem for tools designed to analyze and interpret regulatory networks by integrating various high-throughput experiments. Our package fits well within this ecosystem, as it enables users to perform integrative analyses that combine various omics datasets that describe the regulatory networks with the differential gene expression.
+
+## Overview
 
 Associating peaks/sites from high-throughput experiments and target genes is a fundamental question in gene regulatory studies. Peaks can be transcription factor binding sites from ChIP-seq experiments, or can be open chromatin regions derived from ATAC-seq experiments as well as histone modification marks derived from ChIP-seq experiments. Gene regulatory perturbation often measured by standard high-throughput expression measurement such as RNA-seq.
 The effect of sites/peaks on genes expression have been implemented in peakwise-association of **Site2Target**. The peaks are associated to genes by given distance (default 50K base pairs). **Site2Target** can also associate sites/peaks to genes with extra user provided DNA-DNA interactions. This can be known as enhancer-promoter interactions or high-throughput interactions from HiC or similar experiments. Alternatively,  **Site2Target** can associate peaks to genes inside user given genomic ranges. These genomic ranges can be TADs, subTADs, loops, or any similar associations to genomic regions. **Site2Target** work with both peaks/sites with and without intensity values. For example, peaks may only consist of differential accessibility of open chromatin or binding sites of transcription factors. On the other hand, peaks/sites can also have intensity values such transcription factor binding sites intensities. In cases of binary associations, the number of associated peaks to genes follow negative binomial distribution similar to any other count data. Therefore, **Site2Target** provided negative binomial tests (default) as well as Poisson test to detect target genes of given peaks. Generally, peaks such as transcription factor binding sites, and to some extent histone marks and open chromatin accessibility follow log-normal distribution. Therefore, **Site2Target** models the intensity values assigned to each gene with log-normal distribution. A similar approach has been used to model upstream regulator and target gene interaction [@Kramer2014]. **Site2Target** used `r Biocpkg("GenomicRanges")` [@Lawrence2013] to perform all the functions related to genome interactions/associations, and used `r CRANpkg("MASS")` [@Venables2002] to perform statistical modeling.

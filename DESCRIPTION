@@ -1,10 +1,11 @@
 Package: Site2Target
 Type: Package
 Title: An R package to associate peaks and target genes
-Version: 0.99.2
+Version: 0.99.3
 Authors@R: person("Peyman Zarrineh", email="peyman.zarrineh@manchester.ac.uk", role=c("cre", "aut"), comment = c(ORCID = "0000-0003-4820-4101"))
 Description: Statistics implemented for both peak-wise and gene-wise associations. In peak-wise associations, the p-value of the target genes of a given set of peaks are calculated. Negative binomial or Poisson distributions can be used for modeling the unweighted peaks targets and log-nromal can be used to model the weighted peaks. In gene-wise associations a table consisting of a set of genes, mapped to specific peaks, is generated using the given rules.
 BugReports: https://github.com/fls-bioinformatics-core/Site2Target/issues
+Depends: R (>= 4.4)
 License: GPL-2
 Encoding: UTF-8
 LazyData: false

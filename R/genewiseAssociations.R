@@ -258,7 +258,6 @@ genewiseAssociation <-
     }
 
 
-    # Remove interactions lower than distance  ############# <----- This can become a function
     strand1Center <- getCenterOfPeaks(strand1)
     center1 <- BiocGenerics::start(strand1Center)
     rm(strand1Center)
@@ -277,7 +276,7 @@ genewiseAssociation <-
     strand1 <- strand1[distantInteractomInds]
     strand2 <- strand2[distantInteractomInds]
 
-    ## Now add interactions to association table  ### This part can be a new function
+    ## Now add interactions to association table
 
     peakCoord <- getCenterOfPeaks(peakCoordinates)
     # Get TFsites in DNA inetarction strand2

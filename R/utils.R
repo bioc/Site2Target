@@ -130,7 +130,7 @@ site2GeneDistance <- function(geneCoordinates, peakCoordinates)
 }
 
 
-#' @title Conver granes to strings of cooridnates
+#' @title Convert granges to strings of coordinates
 #' @description Get genomic coordinates granges and convert them to strings
 #' @param gr granges coordinates
 #' @return string of coordinates
@@ -153,8 +153,8 @@ granges2String <- function(gr)
 
 
 
-#' @title Conver strings to granges of cooridnates
-#' @description Get genomic coordinates as trings and convert them to grangess
+#' @title Convert strings to granges of coordinates
+#' @description Get genomic coordinates as strings and convert them to granges
 #' @param strCoordinates string of coordinates
 #' @return Genomic coordinates in granges format
 #' @examples
@@ -165,11 +165,11 @@ granges2String <- function(gr)
 string2Granges <- function(strCoordinates) {
   len <- length(strCoordinates)
   tmp <- unlist(strsplit(strCoordinates, ":"))
-  chrs <- tmp[(c(1:len)*2-1)]
-  Ranges <- tmp[(c(1:len)*2)]
+  chrs <- tmp[(seq_len(len)*2-1)]
+  Ranges <- tmp[(seq_len(len)*2)]
   tmp <- unlist(strsplit(Ranges, "-"))
-  start <-  tmp[(c(1:len)*2-1)]
-  end <- tmp[(c(1:len)*2)]
+  start <-  tmp[(seq_len(len)*2-1)]
+  end <- tmp[(seq_len(len)*2)]
   granges <-
     GenomicRanges::GRanges(
       seqnames=S4Vectors::Rle(chrs),

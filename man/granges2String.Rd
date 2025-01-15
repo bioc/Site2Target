@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{granges2String}
 \alias{granges2String}
-\title{Conver granes to strings of cooridnates}
+\title{Convert granges to strings of coordinates}
 \usage{
 granges2String(gr)
 }
