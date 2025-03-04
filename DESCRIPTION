@@ -12,5 +12,5 @@ LazyData: false
 Imports: S4Vectors, stats, utils, BiocGenerics, GenomeInfoDb, MASS, IRanges, GenomicRanges
 biocViews: Annotation, ChIPSeq, Software, Epigenetics, GeneExpression, GeneTarget
 RoxygenNote: 7.3.2
-Suggests: BiocStyle, knitr, rmarkdown
+Suggests: BiocStyle, knitr, rmarkdown, testthat
 VignetteBuilder: knitr
