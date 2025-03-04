@@ -1,3 +1,8 @@
+# Site2Target 0.99.4
+
++ Add unit testing with testthat
+
+
 # Site2Target 0.99.3
 
 + Address notes raised by Bioconductor reviewer
