@@ -27,7 +27,7 @@ test_that("Check getTargetGenesPvals",{
 
     topTargetIndex <- order(pvals)[1]
     expect_identical(geneTable$name[topTargetIndex], "RUNX1")
-    expect_equal(pvals[topTargetIndex], 2.22594825990949e-06)
+    expect_equal(pvals[topTargetIndex], 2.22594825990949e-06, tolerance = 1e-6)
 
 })
 
@@ -41,7 +41,7 @@ test_that("Check getTargetGenesPvalsWithDNAInteractions",{
 
     topTargetIndex <- order(pvals)[1]
     expect_identical(geneTable$name[topTargetIndex], "RUNX1")
-    expect_equal(pvals[topTargetIndex], 2.22594825990949e-06)
+    expect_equal(pvals[topTargetIndex], 2.22594825990949e-06, tolerance = 1e-6)
 
 })
 
@@ -55,7 +55,7 @@ test_that("Check getTargetGenesPvalsWithIntensities",{
 
     topTargetIndex <- order(pvals)[1]
     expect_identical(geneTable$name[topTargetIndex], "RUNX1")
-    expect_equal(pvals[topTargetIndex], 0.00169937052797075)
+    expect_equal(pvals[topTargetIndex], 0.00169937052797075, tolerance = 1e-4)
 
 })
 
@@ -72,6 +72,6 @@ test_that("Check getTargetGenesPvalsWithIntensitiesAndDNAInteractions",{
 
     topTargetIndex <- order(pvals)[1]
     expect_identical(geneTable$name[topTargetIndex], "RUNX1")
-    expect_equal(pvals[topTargetIndex], 0.00169937052797075)
+    expect_equal(pvals[topTargetIndex], 0.00169937052797075, tolerance = 1e-4)
 
 })

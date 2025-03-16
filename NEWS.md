@@ -1,3 +1,8 @@
+# Site2Target 0.99.5
+
++ Added tolerance values to expect_equal in testthat 
+
+
 # Site2Target 0.99.4
 
 + Add unit testing with testthat
